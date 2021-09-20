@@ -112,7 +112,7 @@ function getFolderPath(urls) {
   urls.forEach(x => {
     const ix = x.indexOf(settings.createPathAfterUrlComponent) + settings.createPathAfterUrlComponent.length;
 
-    folderPaths.push(x.substring(ix, x.lastIndexOf('/')));
+    folderPaths.push(decodeURI(x.substring(ix, x.lastIndexOf('/'))));
   });
 
   return [...new Set(folderPaths)];
