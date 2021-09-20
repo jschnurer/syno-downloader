@@ -29,7 +29,7 @@ For example:
 * createPathAfterUrlComponent = `/public/files/`
 * baseDownloadDir = `/Shared/Downloads`
 
-The url "https://somewebsite.com/public/files/TVShow1/Season1/episode 1.mkv" would create the following folder path on the NAS:
+The url `https://somewebsite.com/public/files/TVShow1/Season1/episode 1.mkv` would create the following folder path on the NAS:
 * /Shared/Downloads/TVShow1/Season1
 
 It would then download `episode 1.mkv` into that folder path.
