@@ -35,3 +35,6 @@ The url `https://somewebsite.com/public/files/TVShow1/Season1/episode 1.mkv` wou
 It would then download `episode 1.mkv` into that folder path.
 
 The process repeats for every url in the `input.txt` file. So by doing this, you can sort of preserve the folder structure of the download list.
+
+# Using the script in your own scripts
+Simply import or require `.\downloader.js` into your own script and then call the exported `handleUrls(urls, settings)` method. You'll need to pass in a string array of the urls to download as well as the settings object (as per the `local.settings.json` file above).

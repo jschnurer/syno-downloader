@@ -1,28 +1,26 @@
-const settings = require("./local.settings.json");
 const Syno = require('syno');
 
-var syno = new Syno({
-  protocol: settings.protocol,
-  host: settings.host,
-  port: settings.port,
-  account: settings.account,
-  passwd: settings.password,
-  apiVersion: settings.apiVersion || '6.0.2',
-});
-
-async function handleUrls(urls) {
+async function handleUrlsAsync(urls, settings) {
   if (!urls.length) {
-    console.log("NO URLS SPECIFIED IN INPUT.TXT");
-    return;
+    throw new Error("No urls were provided!");
   }
 
-  await createNestedFolders(urls);
-  await createDownloadTasks(urls);
+  var syno = new Syno({
+    protocol: settings.protocol,
+    host: settings.host,
+    port: settings.port,
+    account: settings.account,
+    passwd: settings.password,
+    apiVersion: settings.apiVersion || '6.0.2',
+  });
+
+  await createNestedFolders(urls, syno, settings);
+  await createDownloadTasks(urls, syno, settings);
 }
 
-async function createDownloadTasks(urls) {
+async function createDownloadTasks(urls, syno, settings) {
   for (let i = 0; i < urls.length; i++) {
-    const folderPath = getFolderPath([urls[i]])[0];
+    const folderPath = getFolderPath([urls[i]], settings)[0];
 
     let destination = `${settings.baseDownloadDir}/${folderPath}`
 
@@ -47,12 +45,12 @@ async function createDownloadTasks(urls) {
   }
 }
 
-async function createNestedFolders(urls) {
+async function createNestedFolders(urls, syno, settings) {
   if (!settings.createPathAfterUrlComponent) {
     return;
   }
 
-  const folderPaths = getFolderPath(urls);
+  const folderPaths = getFolderPath(urls, settings);
 
   for (let f = 0; f < folderPaths.length; f++) {
     const path = folderPaths[f];
@@ -89,7 +87,7 @@ async function createNestedFolders(urls) {
   }
 }
 
-function getFolderPath(urls) {
+function getFolderPath(urls, settings) {
   const folderPaths = [];
 
   urls.forEach(x => {
@@ -102,5 +100,5 @@ function getFolderPath(urls) {
 }
 
 module.exports = {
-  handleUrls,
+  handleUrlsAsync,
 };

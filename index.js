@@ -1,5 +1,6 @@
 const downloader = require("./downloader.js");
 const fs = require("fs");
+const settings = require("./local.settings.json");
 
 function getUrls() {
   return fs.readFileSync("./input.txt", "utf8")
@@ -13,4 +14,4 @@ function getUrls() {
     });
 }
 
-downloader.handleUrls(getUrls());
+downloader.handleUrlsAsync(getUrls(), settings);
